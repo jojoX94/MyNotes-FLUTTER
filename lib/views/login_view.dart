@@ -1,40 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:mynotes/views/login_view.dart';
 
-import 'firebase_options.dart';
+import '../firebase_options.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const RegisterView(),
-    );
-  }
-}
-
-
-class RegisterView extends StatefulWidget {
-  const RegisterView({Key? key}) : super(key: key);
+class LoginView extends StatefulWidget {
+  const LoginView({Key? key}) : super(key: key);
 
   @override
-  State<RegisterView> createState() => _RegisterViewState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
+class _LoginViewState extends State<LoginView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -56,7 +33,7 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register'),
+        title: const Text('Login'),
       ),
       body: SafeArea(
         child: FutureBuilder(
@@ -74,7 +51,7 @@ class _RegisterViewState extends State<RegisterView> {
                       autocorrect: false,
                       keyboardType: TextInputType.emailAddress,
                       decoration: const InputDecoration(
-                          hintText: 'Enter your email here'),
+                          hintText: 'Enter your email here',),
                     ),
                     TextField(
                       controller: _password,
@@ -82,7 +59,7 @@ class _RegisterViewState extends State<RegisterView> {
                       autocorrect: false,
                       obscureText: true,
                       decoration: const InputDecoration(
-                          hintText: 'Enter your password here'),
+                          hintText: 'Enter your password here',),
                     ),
                     TextButton(
                       onPressed: () async {
@@ -91,30 +68,27 @@ class _RegisterViewState extends State<RegisterView> {
 
                         try {
                           final userCredential = await FirebaseAuth.instance
-                              .createUserWithEmailAndPassword(
+                              .signInWithEmailAndPassword(
                             email: email,
                             password: password,
                           );
-                          print(userCredential);
                         } on FirebaseAuthException catch(e) {
-                          if (e.code == 'email-already-in-use') {
-                            print('Email is already in use');
-                          } else if (e.code == 'weak-password') {
-                            print('Please provide a valid password');
-                          } else if (e.code == 'invalid-email') {
-                            print('Please provide valid email');
+                          if (e.code == 'user-not-found') {
+                            print('User not found');
+                          } else if (e.code == 'wrong-password') {
+                            print('Wrong password');
                           } else {
-                            print('Something bad happenned ');
+                            print('Something bad happenned');
                           }
                         }
                       },
-                      child: const Text('Register'),
+                      child: const Text('Login'),
                     ),
                   ],
                 );
               default:
                 return const Center(
-                  child: Text("Loading....."),
+                  child: Text('Loading.....'),
                 );
             }
           },
