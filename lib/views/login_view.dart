@@ -32,52 +32,57 @@ class _LoginViewState extends State<LoginView> {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            TextField(
-              controller: _email,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                hintText: 'Enter your email here',
-              ),
+      body: Column(
+        children: [
+          TextField(
+            controller: _email,
+            enableSuggestions: false,
+            autocorrect: false,
+            keyboardType: TextInputType.emailAddress,
+            decoration: const InputDecoration(
+              hintText: 'Enter your email here',
             ),
-            TextField(
-              controller: _password,
-              enableSuggestions: false,
-              autocorrect: false,
-              obscureText: true,
-              decoration: const InputDecoration(
-                hintText: 'Enter your password here',
-              ),
+          ),
+          TextField(
+            controller: _password,
+            enableSuggestions: false,
+            autocorrect: false,
+            obscureText: true,
+            decoration: const InputDecoration(
+              hintText: 'Enter your password here',
             ),
-            TextButton(
-              onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
+          ),
+          TextButton(
+            onPressed: () async {
+              final email = _email.text;
+              final password = _password.text;
 
-                try {
-                  final userCredential =
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
-                    email: email,
-                    password: password,
-                  );
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'user-not-found') {
-                    print('User not found');
-                  } else if (e.code == 'wrong-password') {
-                    print('Wrong password');
-                  } else {
-                    print('Something bad happened');
-                  }
+              try {
+                final userCredential =
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  email: email,
+                  password: password,
+                );
+              } on FirebaseAuthException catch (e) {
+                if (e.code == 'user-not-found') {
+                  print('User not found');
+                } else if (e.code == 'wrong-password') {
+                  print('Wrong password');
+                } else {
+                  print('Something bad happened');
                 }
-              },
-              child: const Text('Login'),
-            ),
-          ],
-        ),
+              }
+            },
+            child: const Text('Login'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context)
+                  .pushNamedAndRemoveUntil('/register', (route) => false);
+            },
+            child: const Text('Not registered yet? Register here!'),
+          ),
+        ],
       ),
     );
   }
