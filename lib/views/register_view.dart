@@ -1,5 +1,8 @@
+import 'dart:developer' as devtools show log;
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/constants/routes.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -62,16 +65,16 @@ class _RegisterViewState extends State<RegisterView> {
                     email: email,
                     password: password,
                   );
-                  print(userCredential);
+                  devtools.log(userCredential.toString());
                 } on FirebaseAuthException catch (e) {
                   if (e.code == 'email-already-in-use') {
-                    print('Email is already in use');
+                    devtools.log('Email is already in use');
                   } else if (e.code == 'weak-password') {
-                    print('Please provide a valid password');
+                    devtools.log('Please provide a valid password');
                   } else if (e.code == 'invalid-email') {
-                    print('Please provide valid email');
+                    devtools.log('Please provide valid email');
                   } else {
-                    print('Something bad happenned ');
+                    devtools.log('Something bad happenned ');
                   }
                 }
               },
@@ -80,7 +83,7 @@ class _RegisterViewState extends State<RegisterView> {
             TextButton(
               onPressed: () {
                 Navigator.of(context)
-                    .pushNamedAndRemoveUntil('/login', (route) => false);
+                    .pushNamedAndRemoveUntil(loginRoute, (route) => false);
               },
               child: const Text('Already have a account ? Sign In here!'),
             ),
