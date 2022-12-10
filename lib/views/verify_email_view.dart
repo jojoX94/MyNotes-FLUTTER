@@ -24,7 +24,7 @@ class VerifyEmailView extends StatelessWidget {
           TextButton(
             onPressed: () async {
               try {
-                await AuthService.firebase().sendEmailVerifcation();
+                await AuthService.firebase().sendEmailVerification();
               } catch (e) {
                 devtools.log(e.toString());
               }
