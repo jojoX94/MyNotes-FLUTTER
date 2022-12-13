@@ -38,7 +38,7 @@ linter:
     annotate_overrides: true
 
     # Highlights boolean expressions which can be simplified
-    avoid_bool_literals_in_conditional_expressions: true
+    avoid_bool_literals_in_conditional_expressions: false
 
     # Errors aren't for catching but to prevent prior to runtime
     avoid_catching_errors: true
