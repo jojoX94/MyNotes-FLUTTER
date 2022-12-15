@@ -37,7 +37,7 @@ dependencies:
   firebase_core: ^2.3.0
   flutter:
     sdk: flutter
-  path: ^1.8.3
+  path: ^1.8.2
   path_provider: ^2.0.11
   sqflite: ^2.2.2
 
@@ -48,8 +48,9 @@ dev_dependencies:
 
   test: ^1.22.1
 
+dependency_overrides:
+  test_api: 0.4.17
 flutter:
-
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
