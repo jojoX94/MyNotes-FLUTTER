@@ -14,6 +14,35 @@ class _NewNoteViewState extends State<NewNoteView> {
   late final NotesService _notesService;
   late final TextEditingController _textEditingController;
 
+  @override
+  void initState() {
+    _notesService = NotesService();
+    _textEditingController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _deleteNoteIfTextIsEmpty();
+    _saveNoteIfTextNotEmpty();
+    _textEditingController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _textControllerListener() async {
+    final note = _note;
+    if (note == null) {
+      return;
+    }
+    final text = _textEditingController.text;
+    await _notesService.updateNote(note: note, text: text);
+  }
+
+  void _setupTextControllerListener() {
+    _textEditingController.removeListener(_textControllerListener);
+    _textEditingController.addListener(_textControllerListener);
+  }
+
   Future<DatabaseNote> createNewNote() async {
     final existingNote = _note;
     if (existingNote != null) {
@@ -27,16 +56,46 @@ class _NewNoteViewState extends State<NewNoteView> {
     return _notesService.createNote(owner: owner);
   }
 
+  void _deleteNoteIfTextIsEmpty() {
+    final note = _note;
+    if (_textEditingController.text.isEmpty && note != null) {
+      _notesService.deleteNote(noteID: note.id);
+    }
+  }
+
+  Future<void> _saveNoteIfTextNotEmpty() async {
+    final note = _note;
+    final text = _textEditingController.text;
+    if (text.isNotEmpty && note != null) {
+      await _notesService.updateNote(note: note, text: text);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('New Note'),
       ),
-      body: Column(
-        children: const [
-          Text('New route'),
-        ],
+      body: FutureBuilder(
+        future: createNewNote(),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              _note = snapshot.data as DatabaseNote;
+              _setupTextControllerListener();
+              return TextField(
+                controller: _textEditingController,
+                maxLines: null,
+                keyboardType: TextInputType.multiline,
+                decoration: const InputDecoration(
+                  hintText: 'Starat typing your note....',
+                ),
+              );
+            default:
+              return const CircularProgressIndicator();
+          }
+        },
       ),
     );
   }

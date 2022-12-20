@@ -33,7 +33,7 @@ class NotesService {
       final user = await getUser(email: email);
 
       return user;
-    } on CouldNotFindNote {
+    } on CouldNotFindUser {
       final createdUser = await createUser(email: email);
 
       return createdUser;
@@ -129,7 +129,7 @@ class NotesService {
     }
   }
 
-  Future<void> deleteNote({required String noteID}) async {
+  Future<void> deleteNote({required int noteID}) async {
     await _ensureDBIsOpen();
     final db = _getDatabaseOrThrow();
     final deletedCount = await db.delete(
