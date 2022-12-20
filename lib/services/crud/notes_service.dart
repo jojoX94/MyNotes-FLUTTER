@@ -15,10 +15,15 @@ class NotesService {
 
   factory NotesService() => _shared;
 
-  NotesService._sharedInstance();
+  late final StreamController<List<DatabaseNote>> _notesStreamController;
 
-  final _notesStreamController =
-      StreamController<List<DatabaseNote>>.broadcast();
+  NotesService._sharedInstance() {
+    _notesStreamController = StreamController<List<DatabaseNote>>.broadcast(
+      onListen: () {
+        _notesStreamController.sink.add(_notes);
+      },
+    );
+  }
 
   Stream<List<DatabaseNote>> get allNotes => _notesStreamController.stream;
 
@@ -298,7 +303,7 @@ class DatabaseNote {
 
   @override
   String toString() {
-    return 'DatabaseNote{id: $id, userId: $userId, isSyncedWithCloud: $isSyncedWithCloud}';
+    return 'DatabaseNote{id: $id, userId: $userId, text: $text, isSyncedWithCloud: $isSyncedWithCloud}';
   }
 
   @override
