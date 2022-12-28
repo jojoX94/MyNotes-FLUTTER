@@ -50,6 +50,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     if (widgetNote != null) {
       _note = widgetNote;
       _textEditingController.text = widgetNote.text;
+
       return widgetNote;
     }
     final existingNote = _note;
