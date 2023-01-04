@@ -55,7 +55,7 @@ class FirebaseCloudStorage {
           .get()
           .then(
             (value) => value.docs.map(
-              (doc) => CloudNote.fromSnapshot(doc),
+              CloudNote.fromSnapshot,
             ),
           );
     } catch (e) {
