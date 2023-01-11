@@ -20,12 +20,13 @@ Once you have Flutter and the Dart SDK installed, you can clone this repository 
 
 
 ## Screenshots
+<div style="display: flex;">
+<img src="https://drive.google.com/uc?export=view&id=1DxkuzITGrJJ_4alt4mubjK_ZqrYqK4oN" width="180" height="500">
+<img src="https://drive.google.com/uc?export=view&id=1Defj2GOeVxwKZWjtqi4Q1sOHWwCDQgdI" width="180" height="500">
+<img src="https://drive.google.com/uc?export=view&id=1_VgjWLUMZccGQ3MjEu6zevklFmdNArfC" width="180" height="500">
+<img src="https://drive.google.com/uc?export=view&id=1yOAcUT-RC-kpAqG7K7ROT85CkEMf28-1" width="200" height="500">
+</div>
 
-![Splash Screen](https://drive.google.com/file/d/1DxkuzITGrJJ_4alt4mubjK_ZqrYqK4oN/view?usp=share_link)
-![Auth Screen](https://drive.google.com/file/d/1Defj2GOeVxwKZWjtqi4Q1sOHWwCDQgdI/view?usp=share_link)
-![Home Screen](https://drive.google.com/file/d/1_VgjWLUMZccGQ3MjEu6zevklFmdNArfC/view?usp=share_link)
-![Update Screen](https://drive.google.com/file/d/1TwY34ZYGr10umLMc1NGeonTV4zjiEtlu/view?usp=share_link)
-![Update Screen and Share note](https://drive.google.com/file/d/1yOAcUT-RC-kpAqG7K7ROT85CkEMf28-1/view?usp=share_link)
 
 
 
